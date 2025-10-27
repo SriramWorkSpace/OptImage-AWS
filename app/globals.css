@@ -1,0 +1,24 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+    /* Force dark theme globally */
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 10, 10, 10;
+    /* approx gray-950 */
+    --background-end-rgb: 10, 10, 10;
+    /* no gradient */
+}
+
+body {
+    color: rgb(var(--foreground-rgb));
+    /* Remove gradients; use a solid dark background */
+    background-color: rgb(var(--background-end-rgb));
+}
+
+@layer utilities {
+    .text-balance {
+        text-wrap: balance;
+    }
+}
