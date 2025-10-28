@@ -100,3 +100,59 @@ Environment:
 ---
 
 Made with ❤️ using Next.js, AWS, and Vercel.
+
+---
+
+# 🖼️ OptImage – Serverless Image Optimization App
+
+OptImage is a modern, cloud-based image optimization web app built with Next.js 13.5.6 and AWS.
+It allows users to securely upload images that are automatically resized and optimized in real time — powered entirely by AWS Lambda and S3.
+
+---
+
+## 🚀 Features (summary)
+
+- 🔄 Automatic Image Resizing – Every uploaded image is resized into three versions (thumbnail, medium, large).
+- ☁️ Completely Serverless – Built with AWS Lambda, S3, and API Gateway — no backend server to manage.
+- 🔒 Secure Uploads – Uses AWS Presigned URLs to upload directly to S3 without exposing credentials.
+- 🖥️ Fast and Responsive UI – Clean frontend built with Next.js + TailwindCSS.
+- 🧹 Smart Storage Management – Optional S3 lifecycle rules can auto-delete old resized images.
+- 📊 Monitored via CloudWatch – Lambda logs make debugging and tracking performance easy.
+
+---
+
+## ⚙️ How It Works
+
+### 🧠 AWS Lambda Integration
+
+- `presigner-lambda`
+  - Generates a presigned URL using AWS SDK.
+  - The frontend requests this URL, then uploads images directly to S3 — no server in between.
+
+- `resizer-lambda`
+  - Triggered automatically when a new image is uploaded to the S3 bucket (event type: `ObjectCreated`).
+  - Uses Pillow (via a Lambda Layer) to:
+    - Resize the image to multiple sizes.
+    - Save them back to S3 under the `resized/` folder.
+
+Together, these functions form a fully serverless pipeline — from upload to image optimization.
+
+---
+
+## 🧭 Getting Started (Frontend)
+
+### 1) Install dependencies
+
+```bash
+npm install
+```
+
+### 2) Run locally
+
+```bash
+npm run dev
+```
+
+### 3) Open the app
+
+Visit http://localhost:3000
