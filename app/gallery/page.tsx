@@ -189,7 +189,7 @@ export default function GalleryPage() {
               <ol className="list-decimal list-inside space-y-1 text-gray-400">
                 <li>Create an AWS SDK configuration with your credentials</li>
                 <li>Add an API route at <code className="bg-gray-800 px-2 py-1 rounded">/api/list-images</code></li>
-                <li>Use AWS SDK to list objects from the S3 bucket's <code className="bg-gray-800 px-2 py-1 rounded">resized/</code> folder</li>
+                <li>Use AWS SDK to list objects from the S3 bucket&#39;s <code className="bg-gray-800 px-2 py-1 rounded">resized/</code> folder</li>
               </ol>
             </div>
           </div>
