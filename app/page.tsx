@@ -1,51 +1,70 @@
 import Link from 'next/link'
 import { Upload, Image as ImageIcon, Zap } from 'lucide-react'
+import SplineHero from '@/components/SplineHero'
 
 export default function Home() {
   return (
     <div className="min-h-screen bg-gray-950">
-      {/* Hero Section */}
-      <div className="container mx-auto px-4 py-20">
-        <div className="text-center max-w-4xl mx-auto">
-          <div className="inline-flex items-center gap-2 bg-blue-900/30 text-blue-400 px-4 py-2 rounded-full text-sm font-medium mb-6 border border-blue-800/50 hover:scale-105 transition-transform duration-300 cursor-default">
-            <Zap className="w-4 h-4" />
-            <span>Powered by AWS Serverless</span>
-          </div>
-          
-          <h1 className="text-6xl font-bold text-white mb-6 tracking-tight">
-            Optimize Your Images
-            <span className="block text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">
-              Instantly & Effortlessly
-            </span>
-          </h1>
-          
-          <p className="text-xl text-gray-400 mb-12 max-w-2xl mx-auto leading-relaxed">
-            Upload images and get automatically resized versions in multiple sizes. 
-            Fast, scalable, and powered by AWS Lambda.
-          </p>
-
-          <div className="flex gap-4 justify-center">
-            <Link 
-              href="/upload"
-              className="group bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-xl font-semibold text-lg transition-all duration-300 hover:scale-105 flex items-center gap-2"
-            >
-              <Upload className="w-5 h-5" />
-              Upload Image
-              <span className="group-hover:translate-x-1 transition-transform">→</span>
-            </Link>
+      {/* Hero Section with Spline Background */}
+      <div className="relative w-full h-screen overflow-hidden">
+        {/* Spline 3D scene as full background */}
+        <div className="absolute inset-0 w-full h-full">
+          <SplineHero
+            url="https://my.spline.design/worldplanet-FrjelJOWDBwB5ypHZ0Xfb8Hu/"
+            height="100%"
+            className="w-full h-full"
+          />
+        </div>
+        
+        {/* Overlay gradient for better text readability */}
+        <div className="absolute inset-0 bg-gradient-to-b from-gray-950/60 via-gray-950/40 to-gray-950/80" />
+        
+        {/* Hero content overlaid on Spline */}
+        <div className="relative z-10 container mx-auto px-4 h-full flex items-center justify-center">
+          <div className="text-center max-w-4xl mx-auto">
+            <div className="inline-flex items-center gap-2 bg-blue-900/50 backdrop-blur-sm text-blue-400 px-4 py-2 rounded-full text-sm font-medium mb-6 border border-blue-800/50 hover:scale-105 transition-transform duration-300 cursor-default">
+              <Zap className="w-4 h-4" />
+              <span>Powered by AWS Serverless</span>
+            </div>
             
-            <Link 
-              href="/gallery"
-              className="bg-gray-800 hover:bg-gray-700 text-gray-100 px-8 py-4 rounded-xl font-semibold text-lg transition-all duration-300 border-2 border-gray-700 hover:border-gray-600 flex items-center gap-2"
-            >
-              <ImageIcon className="w-5 h-5" />
-              View Gallery
-            </Link>
+            <h1 className="text-6xl font-bold text-white mb-6 tracking-tight drop-shadow-2xl">
+              Optimize Your Images
+              <span className="block text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">
+                Instantly & Effortlessly
+              </span>
+            </h1>
+            
+            <p className="text-xl text-gray-200 mb-12 max-w-2xl mx-auto leading-relaxed drop-shadow-lg">
+              Upload images and get automatically resized versions in multiple sizes. 
+              Fast, scalable, and powered by AWS Lambda.
+            </p>
+
+            <div className="flex gap-4 justify-center">
+              <Link 
+                href="/upload"
+                className="group bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-xl font-semibold text-lg transition-all duration-300 hover:scale-105 flex items-center gap-2 shadow-2xl backdrop-blur-sm"
+              >
+                <Upload className="w-5 h-5" />
+                Upload Image
+                <span className="group-hover:translate-x-1 transition-transform">→</span>
+              </Link>
+              
+              <Link 
+                href="/gallery"
+                className="bg-gray-800/80 backdrop-blur-sm hover:bg-gray-700/80 text-gray-100 px-8 py-4 rounded-xl font-semibold text-lg transition-all duration-300 border-2 border-gray-700 hover:border-gray-600 flex items-center gap-2 shadow-2xl"
+              >
+                <ImageIcon className="w-5 h-5" />
+                View Gallery
+              </Link>
+            </div>
           </div>
         </div>
+      </div>
 
+      {/* Content section below hero */}
+      <div className="container mx-auto px-4 py-20">
         {/* Features Grid */}
-        <div className="grid md:grid-cols-3 gap-8 mt-24 max-w-6xl mx-auto">
+        <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
           <div className="bg-gray-900 p-8 rounded-2xl border border-gray-800 hover:border-blue-500 transition-all">
             <div className="w-12 h-12 bg-blue-900/50 rounded-xl flex items-center justify-center mb-4">
               <Upload className="w-6 h-6 text-blue-400" />
@@ -87,7 +106,7 @@ export default function Home() {
             <span>•</span>
             <span className="font-semibold">API Gateway</span>
             <span>•</span>
-            <span className="font-semibold">Next.js 14</span>
+            <span className="font-semibold">Next.js 13</span>
             <span>•</span>
             <span className="font-semibold">TailwindCSS</span>
           </div>

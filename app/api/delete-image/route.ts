@@ -24,7 +24,8 @@ export async function DELETE(request: Request) {
         const sizes = ['thumb_', 'medium_', 'large_']
         const deletePromises = sizes.map(async (prefix) => {
             const key = `resized/${prefix}${baseName}`
-            const url = `https://${BUCKET_NAME}.s3.${REGION}.amazonaws.com/${key}`
+            const rawUrl = `https://${BUCKET_NAME}.s3.${REGION}.amazonaws.com/${key}`
+            const url = encodeURI(rawUrl)
 
             console.log('[DELETE] Attempting to delete:', url)
 

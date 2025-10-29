@@ -32,60 +32,50 @@ export async function GET() {
         const xmlText = await response.text()
         console.log('[LIST] Got XML response')
 
-        // Parse XML to extract image keys
-        const keyRegex = /<Key>(.*?)<\/Key>/g
-        const sizeRegex = /<Size>(\d+)<\/Size>/g
-        const dateRegex = /<LastModified>(.*?)<\/LastModified>/g
+        // Parse per <Contents> block to keep metadata aligned
+        const contentsRegex = /<Contents>([\s\S]*?)<\/Contents>/g
+        const images = [] as Array<{ name: string; url: string; size: string; timestamp: string }>
 
-        const keys: string[] = []
-        const sizes: number[] = []
-        const dates: string[] = []
+        let contentMatch: RegExpExecArray | null
+        while ((contentMatch = contentsRegex.exec(xmlText)) !== null) {
+            const block = contentMatch[1]
+            const keyMatch = /<Key>(.*?)<\/Key>/.exec(block)
+            const dateMatch = /<LastModified>(.*?)<\/LastModified>/.exec(block)
+            // const sizeMatch = /<Size>(\d+)<\/Size>/.exec(block) // not used in UI
 
-        let match
-        while ((match = keyRegex.exec(xmlText)) !== null) {
-            keys.push(match[1])
-        }
-        while ((match = sizeRegex.exec(xmlText)) !== null) {
-            sizes.push(parseInt(match[1]))
-        }
-        while ((match = dateRegex.exec(xmlText)) !== null) {
-            dates.push(match[1])
-        }
+            if (!keyMatch) continue
+            const key = keyMatch[1]
+            const kLower = key.toLowerCase()
+            // Filter to images under resized/
+            if (
+                key === 'resized/' ||
+                !key.startsWith('resized/') ||
+                !(kLower.endsWith('.jpg') || kLower.endsWith('.jpeg') || kLower.endsWith('.png') || kLower.endsWith('.gif') || kLower.endsWith('.webp'))
+            ) {
+                continue
+            }
 
-        console.log('[LIST] Found', keys.length, 'objects')
+            const fileName = key.replace('resized/', '')
+            const sizeLabel = fileName.startsWith('thumb_')
+                ? 'thumb'
+                : fileName.startsWith('medium_')
+                    ? 'medium'
+                    : fileName.startsWith('large_')
+                        ? 'large'
+                        : 'original'
 
-        // Transform to image items
-        const images = keys
-            .filter((key) => {
-                // Exclude the folder itself and non-image files (case-insensitive extensions)
-                const k = key.toLowerCase()
-                return key !== 'resized/' &&
-                    (k.endsWith('.jpg') || k.endsWith('.jpeg') ||
-                        k.endsWith('.png') || k.endsWith('.gif') ||
-                        k.endsWith('.webp'))
+            const rawUrl = `https://${BUCKET_NAME}.s3.${REGION}.amazonaws.com/${key}`
+            images.push({
+                name: fileName,
+                url: encodeURI(rawUrl),
+                size: sizeLabel,
+                timestamp: (dateMatch && dateMatch[1]) || new Date().toISOString(),
             })
-            .map((key, index) => {
-                const fileName = key.replace('resized/', '')
-                const size = fileName.startsWith('thumb_') ? 'thumb'
-                    : fileName.startsWith('medium_') ? 'medium'
-                        : fileName.startsWith('large_') ? 'large'
-                            : 'original'
+        }
 
-                const rawUrl = `https://${BUCKET_NAME}.s3.${REGION}.amazonaws.com/${key}`
-                return {
-                    name: fileName,
-                    // Encode spaces and special characters but keep slashes
-                    url: encodeURI(rawUrl),
-                    size,
-                    timestamp: dates[index] || new Date().toISOString(),
-                }
-            })
-            .sort((a, b) => {
-                // Sort by timestamp, newest first
-                const dateA = new Date(a.timestamp).getTime()
-                const dateB = new Date(b.timestamp).getTime()
-                return dateB - dateA
-            })
+        // Sort by timestamp desc
+        images.sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime())
+        console.log('[LIST] Returning', images.length, 'images')
 
         console.log('[LIST] Returning', images.length, 'images')
         return NextResponse.json({ images })

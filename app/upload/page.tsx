@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useRef } from 'react'
+import Image from 'next/image'
 import { Upload, CheckCircle2, AlertCircle, Loader2, Image as ImageIcon } from 'lucide-react'
 import Link from 'next/link'
 
@@ -155,11 +156,16 @@ export default function UploadPage() {
               </label>
             ) : (
               <div className="space-y-4">
-                <img
-                  src={preview}
-                  alt="Preview"
-                  className="max-h-64 mx-auto rounded-lg border border-gray-700"
-                />
+                <div className="relative mx-auto rounded-lg border border-gray-700 overflow-hidden" style={{ width: '100%', maxWidth: 512, height: 256 }}>
+                  <Image
+                    src={preview}
+                    alt="Preview"
+                    fill
+                    className="object-contain bg-gray-950"
+                    sizes="(max-width: 640px) 100vw, 512px"
+                    priority
+                  />
+                </div>
                 <div className="flex items-center justify-center gap-2 text-gray-300">
                   <ImageIcon className="w-5 h-5" />
                   <span className="font-medium">{file?.name}</span>
