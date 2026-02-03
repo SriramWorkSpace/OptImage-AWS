@@ -155,4 +155,4 @@ npm run dev
 
 ### 3) Open the app
 
-Visit 
+Visit https://opt-image-aws-la1z.vercel.app/
