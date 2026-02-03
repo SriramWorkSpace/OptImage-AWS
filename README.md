@@ -2,13 +2,13 @@
 
 Cloud-native image optimization web app built with Next.js and AWS.
 
-## 🚀 Live Demo
+##  Live Demo
 
 [opt-image-aws-la1z.vercel.app](https://opt-image-aws-la1z.vercel.app/)
 
 [![Deployed on Vercel](https://img.shields.io/badge/deployed%20on-vercel-black?logo=vercel)](https://opt-image-aws-la1z.vercel.app/)
 
-## ✨ Features
+## Features
 
 - Drag & drop image upload with live preview
 - Presigned S3 uploads (no credentials in the browser)
@@ -17,7 +17,7 @@ Cloud-native image optimization web app built with Next.js and AWS.
 - Dark theme UI, responsive layout, accessible components
 - “OI” logo and branded footer (Sriram Madala)
 
-## 🧩 Components & Technologies Used
+## Components & Technologies Used
 
 - Frontend
   - Next.js 13.5.6 (App Router)
@@ -43,7 +43,7 @@ Cloud-native image optimization web app built with Next.js and AWS.
   - `GET /api/list-images` → Lists `resized/` via S3 REST API (XML → JSON), no creds
   - `DELETE /api/delete-image?name=<file>` → Deletes thumb/medium/large variants
 
-## 🏗️ Project Structure (highlights)
+##  Project Structure (highlights)
 
 ```
 app/
@@ -58,7 +58,7 @@ components/
   Navigation.tsx          # Top navigation with OI logo
 ```
 
-## ⚙️ Local Development
+##  Local Development
 
 Prereqs: Node.js 18+ (Node 20 recommended)
 
@@ -91,7 +91,7 @@ Environment:
   - RGB conversion for JPEG to avoid RGBA save errors
   - High-quality `LANCZOS` downscale, cache headers on outputs
 
-## 🧰 Troubleshooting
+##  Troubleshooting
 
 - “NoSuchKey” when manually opening a URL like `resized/thumb` → add the full filename, e.g. `resized/thumb_test.jpg`.
 - Gallery empty after upload → allow 5–20s for Lambda to write variants; click Refresh.
@@ -103,14 +103,14 @@ Made with ❤️ using Next.js, AWS, and Vercel.
 
 ---
 
-# 🖼️ OptImage – Serverless Image Optimization App
+#  OptImage – Serverless Image Optimization App
 
 OptImage is a modern, cloud-based image optimization web app built with Next.js 13.5.6 and AWS.
 It allows users to securely upload images that are automatically resized and optimized in real time — powered entirely by AWS Lambda and S3.
 
 ---
 
-## 🚀 Features (summary)
+##  Features (summary)
 
 - 🔄 Automatic Image Resizing – Every uploaded image is resized into three versions (thumbnail, medium, large).
 - ☁️ Completely Serverless – Built with AWS Lambda, S3, and API Gateway — no backend server to manage.
@@ -123,7 +123,7 @@ It allows users to securely upload images that are automatically resized and opt
 
 ## ⚙️ How It Works
 
-### 🧠 AWS Lambda Integration
+###  AWS Lambda Integration
 
 - `presigner-lambda`
   - Generates a presigned URL using AWS SDK.
@@ -139,7 +139,7 @@ Together, these functions form a fully serverless pipeline — from upload to im
 
 ---
 
-## 🧭 Getting Started (Frontend)
+##  Getting Started (Frontend)
 
 ### 1) Install dependencies
 
@@ -155,4 +155,4 @@ npm run dev
 
 ### 3) Open the app
 
-Visit http://localhost:3000
+Visit 
